@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class SimpleRepository<V> implements Repository<String, V> {
 
-	private final Map<Integer, V> map = new HashMap<Integer, V>();
+	protected final Map<Integer, V> map = new HashMap<Integer, V>();
 
 	@Override
 	public V findById( String key ) {
