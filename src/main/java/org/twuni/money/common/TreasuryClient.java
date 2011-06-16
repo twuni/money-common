@@ -49,7 +49,7 @@ public class TreasuryClient implements Treasury {
 
 		try {
 			post.setEntity( new UrlEncodedFormEntity( parameters ) );
-			return execute( post, new TypeToken<Set<Token>>() {
+			return execute( post, new TypeToken<Set<SimpleToken>>() {
 			}.getType() );
 		} catch( IOException exception ) {
 			throw new NetworkException( exception );
@@ -72,7 +72,7 @@ public class TreasuryClient implements Treasury {
 
 		try {
 			post.setEntity( new UrlEncodedFormEntity( parameters ) );
-			return execute( post, new TypeToken<Token>() {
+			return execute( post, new TypeToken<SimpleToken>() {
 			}.getType() );
 		} catch( IOException exception ) {
 			throw new NetworkException( exception );

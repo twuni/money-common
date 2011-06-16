@@ -1,10 +1,14 @@
 package org.twuni.money.common;
 
+import com.google.gson.annotations.SerializedName;
+
 public class SimpleToken implements Token {
 
 	private String treasury;
 	private String id;
 	private String secret;
+
+	@SerializedName( "worth" )
 	private int value;
 
 	public SimpleToken() {
