@@ -1,6 +1,6 @@
 package org.twuni.money.common;
 
-public class SimpleToken implements Comparable<Token>, Token {
+public class SimpleToken implements Token {
 
 	private String treasury;
 	private String id;
@@ -63,6 +63,11 @@ public class SimpleToken implements Comparable<Token>, Token {
 	@Override
 	public String getTreasury() {
 		return treasury;
+	}
+
+	@Override
+	public int hashCode() {
+		return id == null ? super.hashCode() : id.hashCode();
 	}
 
 	@Override

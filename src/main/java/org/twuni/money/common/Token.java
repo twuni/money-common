@@ -1,6 +1,6 @@
 package org.twuni.money.common;
 
-public interface Token {
+public interface Token extends Comparable<Token> {
 
 	public String getTreasury();
 
