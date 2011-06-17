@@ -84,8 +84,6 @@ public class Bank {
 
 		}
 
-		vault.save( token );
-
 		return token;
 
 	}
