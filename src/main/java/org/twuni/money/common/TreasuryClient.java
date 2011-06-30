@@ -37,6 +37,11 @@ public class TreasuryClient implements Treasury {
 	}
 
 	@Override
+	public Token create( int amount ) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Set<Token> split( Token token, int amount ) {
 
 		HttpPost post = new HttpPost( String.format( SPLIT_URI, domain ) );
@@ -96,7 +101,7 @@ public class TreasuryClient implements Treasury {
 	}
 
 	@SuppressWarnings( "unchecked" )
-    private <T> T execute( HttpUriRequest request, Type responseType ) throws ClientProtocolException, IOException {
+	private <T> T execute( HttpUriRequest request, Type responseType ) throws ClientProtocolException, IOException {
 		BasicResponseHandler responseHandler = new BasicResponseHandler();
 		String response = client.execute( request, responseHandler );
 		return (T) new Gson().fromJson( response, responseType );

@@ -21,6 +21,7 @@ public class TreasuryService implements Treasury {
 		this.repository = repository;
 	}
 
+	@Override
 	public SimpleToken create( int value ) {
 
 		if( value <= 0 ) {
