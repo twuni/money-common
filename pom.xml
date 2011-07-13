@@ -4,12 +4,26 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.twuni.money</groupId>
-	<artifactId>cash-api</artifactId>
+	<artifactId>common</artifactId>
 	<version>0.2.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	
+
 	<name>Digital Cash API</name>
 	<description>Contains interfaces and base implementations common to the Digital Cash API.</description>
+
+	<scm>
+		<developerConnection>scm:git:ssh:git@github.com:twuni/cash-api.git</developerConnection>
+		<connection>scm:git:ssh:git@github.com:twuni/cash-api.git</connection>
+		<url>scm:git:https://twuni@github.com/twuni/cash-api.git</url>
+	</scm>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<build>
 
