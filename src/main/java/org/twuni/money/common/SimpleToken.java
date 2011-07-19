@@ -1,67 +1,45 @@
 package org.twuni.money.common;
 
-import com.google.gson.annotations.SerializedName;
+import org.twuni.common.crypto.rsa.PrivateKey;
 
 public class SimpleToken implements Token {
 
 	private String treasury;
-	private String id;
-	private String secret;
-
-	@SerializedName( "worth" )
+	private PrivateKey actionKey;
+	private PrivateKey ownerKey;
 	private int value;
 
 	public SimpleToken() {
 	}
 
-	public SimpleToken( String id, String secret ) {
-		this.id = id;
-		this.secret = secret;
+	public SimpleToken( PrivateKey actionKey, PrivateKey ownerKey ) {
+		this.actionKey = actionKey;
+		this.ownerKey = ownerKey;
 	}
 
-	public SimpleToken( String treasury, String id, String secret, int value ) {
+	public SimpleToken( String treasury, PrivateKey actionKey, PrivateKey ownerKey, int value ) {
+		this( actionKey, ownerKey );
 		this.treasury = treasury;
-		this.id = id;
-		this.secret = secret;
 		this.value = value;
 	}
 
 	public SimpleToken( Token token ) {
-		this( token.getTreasury(), token.getId(), token.getSecret(), token.getValue() );
+		this( token.getTreasury(), token.getActionKey(), token.getOwnerKey(), token.getValue() );
 	}
 
 	@Override
-	public String getId() {
-		return id;
-	}
-
-	public void setId( String id ) {
-		this.id = id;
+	public PrivateKey getActionKey() {
+		return actionKey;
 	}
 
 	@Override
-	public String getSecret() {
-		return secret;
-	}
-
-	public void setSecret( String secret ) {
-		this.secret = secret;
+	public PrivateKey getOwnerKey() {
+		return ownerKey;
 	}
 
 	@Override
 	public int getValue() {
 		return value;
-	}
-
-	public void setValue( int value ) {
-		if( 0 >= value ) {
-			throw new IllegalArgumentException( "Value must be greater than zero." );
-		}
-		this.value = value;
-	}
-
-	public void setTreasury( String treasury ) {
-		this.treasury = treasury;
 	}
 
 	@Override
@@ -71,7 +49,7 @@ public class SimpleToken implements Token {
 
 	@Override
 	public int hashCode() {
-		return id == null ? super.hashCode() : id.hashCode();
+		return actionKey == null ? super.hashCode() : actionKey.getPublicKey().serialize().hashCode();
 	}
 
 	@Override
@@ -88,8 +66,27 @@ public class SimpleToken implements Token {
 
 		Token token = getClass().cast( object );
 
-		return id.equals( token.getId() );
+		return actionKey.equals( token.getActionKey() ) && ownerKey.equals( token.getOwnerKey() );
 
+	}
+
+	public void setActionKey( PrivateKey actionKey ) {
+		this.actionKey = actionKey;
+	}
+
+	public void setOwnerKey( PrivateKey ownerKey ) {
+		this.ownerKey = ownerKey;
+	}
+
+	public void setValue( int value ) {
+		if( 0 >= value ) {
+			throw new IllegalArgumentException( "Value must be greater than zero." );
+		}
+		this.value = value;
+	}
+
+	public void setTreasury( String treasury ) {
+		this.treasury = treasury;
 	}
 
 }

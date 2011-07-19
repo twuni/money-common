@@ -6,6 +6,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.twuni.common.crypto.rsa.PrivateKey;
 
 public class TreasuryServiceTest {
 
@@ -91,7 +92,7 @@ public class TreasuryServiceTest {
 	@Test
 	public void shouldReturnZeroWhenAskedForTokensWorthGivenAnUnknownTokenId() {
 
-		Token token = new SimpleToken( BigInteger.ZERO.toString(), null );
+		Token token = new SimpleToken( new PrivateKey( BigInteger.valueOf( 2 ), BigInteger.valueOf( 3 ) ), null );
 
 		int worth = treasury.getValue( token );
 
@@ -117,7 +118,7 @@ public class TreasuryServiceTest {
 		Token a = treasury.create( 30 );
 		Token b = treasury.create( 70 );
 
-		( (SimpleToken) a ).setSecret( null );
+		( (SimpleToken) a ).setOwnerKey( null );
 
 		treasury.merge( a, b );
 
@@ -128,7 +129,7 @@ public class TreasuryServiceTest {
 
 		Token token = treasury.create( 100 );
 
-		( (SimpleToken) token ).setSecret( null );
+		( (SimpleToken) token ).setOwnerKey( null );
 
 		treasury.split( token, 30 );
 

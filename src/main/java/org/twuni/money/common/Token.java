@@ -1,13 +1,15 @@
 package org.twuni.money.common;
 
+import org.twuni.common.crypto.rsa.PrivateKey;
+
 public interface Token extends Comparable<Token> {
+
+	public PrivateKey getActionKey();
+
+	public PrivateKey getOwnerKey();
 
 	public String getTreasury();
 
-	public String getId();
-
 	public int getValue();
-
-	public String getSecret();
 
 }

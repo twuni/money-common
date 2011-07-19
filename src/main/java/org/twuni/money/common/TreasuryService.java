@@ -1,22 +1,22 @@
 package org.twuni.money.common;
 
-import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.codec.binary.Base64;
+import org.twuni.common.crypto.rsa.KeyGenerator;
+import org.twuni.common.crypto.rsa.PrivateKey;
 
 public class TreasuryService implements Treasury {
 
-	private final SecureRandom random = new SecureRandom();
+	private final int keyStrength;
+	private final KeyGenerator keyGenerator;
+	protected final String treasury;
+	protected final Repository<String, Token> repository;
 
-	protected int idLength;
-	protected String treasury;
-	protected Repository<String, Token> repository;
-
-	public TreasuryService( int idLength, String treasury, Repository<String, Token> repository ) {
-		this.idLength = idLength;
+	public TreasuryService( int keyStrength, String treasury, Repository<String, Token> repository ) {
+		this.keyGenerator = new KeyGenerator();
+		this.keyStrength = keyStrength;
 		this.treasury = treasury;
 		this.repository = repository;
 	}
@@ -28,30 +28,15 @@ public class TreasuryService implements Treasury {
 			throw new IllegalArgumentException( "A token's worth must be greater than zero." );
 		}
 
-		String id = generateUniqueId( idLength );
-		String secret = generateRandomBase64String( idLength );
+		PrivateKey actionKey = keyGenerator.generate( keyStrength );
+		PrivateKey ownerKey = keyGenerator.generate( keyStrength );
 
-		Token token = new SimpleToken( treasury, id, secret, value );
+		Token token = new SimpleToken( treasury, actionKey, ownerKey, value );
 
 		save( token );
 
 		return new SimpleToken( token );
 
-	}
-
-	private String generateRandomBase64String( int length ) {
-		byte [] buffer = new byte [length];
-		random.nextBytes( buffer );
-		String result = Base64.encodeBase64String( buffer );
-		return result;
-	}
-
-	private String generateUniqueId( int length ) {
-		String id;
-		do {
-			id = generateRandomBase64String( length );
-		} while( findById( id ) != null );
-		return id;
 	}
 
 	@Override
@@ -77,19 +62,19 @@ public class TreasuryService implements Treasury {
 
 	@Override
 	public int getValue( Token token ) {
-		token = findById( token.getId() );
+		token = findById( token.getActionKey().getPublicKey().serialize() );
 		return token == null ? 0 : token.getValue();
 	}
 
 	protected Token lookup( Token token ) {
 		Token actual = null;
 		try {
-			actual = findById( token.getId() );
+			actual = findById( token.getActionKey().getPublicKey().serialize() );
 		} catch( Throwable exception ) {
 			throw new IllegalArgumentException( exception.getMessage() );
 		}
-		if( actual == null || !actual.getSecret().equals( token.getSecret() ) ) {
-			throw new IllegalArgumentException( String.format( "Token %s is invalid.", token.getId() ) );
+		if( actual == null || !actual.getOwnerKey().equals( token.getOwnerKey() ) ) {
+			throw new IllegalArgumentException( String.format( "Token %s is invalid.", token.getActionKey().getPublicKey() ) );
 		}
 		return actual;
 	}
