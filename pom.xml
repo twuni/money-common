@@ -12,9 +12,9 @@
 	<description>Contains interfaces and base implementations common to the Digital Cash API.</description>
 
 	<scm>
-		<developerConnection>scm:git:ssh:git@github.com:twuni/cash-api.git</developerConnection>
-		<connection>scm:git:ssh:git@github.com:twuni/cash-api.git</connection>
-		<url>scm:git:https://twuni@github.com/twuni/cash-api.git</url>
+		<developerConnection>scm:git:ssh:git@github.com:twuni/money-common.git</developerConnection>
+		<connection>scm:git:ssh:git@github.com:twuni/money-common.git</connection>
+		<url>scm:git:https://twuni@github.com/twuni/money-common.git</url>
 	</scm>
 
 	<developers>
