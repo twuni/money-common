@@ -86,7 +86,7 @@
 
 		<dependency>
 			<groupId>org.twuni</groupId>
-			<artifactId>common-crypto</artifactId>
+			<artifactId>common-crypto-rsa</artifactId>
 			<version>0.1.2-SNAPSHOT</version>
 		</dependency>
 
