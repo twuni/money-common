@@ -10,7 +10,7 @@ public class NetworkException extends RuntimeException {
 
 	@Override
 	public String getMessage() {
-		return getCause().getMessage();
+		return String.format( "[%s] %s", getCause().getClass().getSimpleName(), getCause().getMessage() );
 	}
 
 }
