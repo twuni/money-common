@@ -62,7 +62,12 @@ public class TreasuryService implements Treasury {
 
 	@Override
 	public int getValue( Token token ) {
-		token = findById( token.getActionKey().getPublicKey().serialize() );
+		try {
+			token = findById( token.getActionKey().getPublicKey().serialize() );
+		} catch( Exception exception ) {
+			// FIXME: This should catch an ObjectNotFoundException instead to prevent false-negatives.
+			token = null;
+		}
 		return token == null ? 0 : token.getValue();
 	}
 
