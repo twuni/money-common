@@ -12,7 +12,11 @@ public class ManyExceptions extends RuntimeException {
 
 	@Override
 	public String getMessage() {
-		return exceptions == null ? "" : exceptions.toString();
+		StringBuilder message = new StringBuilder();
+		for( Exception exception : exceptions ) {
+			message.append( String.format( "[%s] %s ", exception.getClass().getSimpleName(), exception.getMessage() ) );
+		}
+		return message.toString().trim();
 	}
 
 	public List<Exception> getExceptions() {

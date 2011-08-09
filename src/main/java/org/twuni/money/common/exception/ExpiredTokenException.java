@@ -16,7 +16,7 @@ public class ExpiredTokenException extends RuntimeException {
 
 	@Override
 	public String getMessage() {
-		return String.format( "The $%.2f token %s issued by %s has expired.", Double.valueOf( token.getValue() / 100.0 ), token.getActionKey().getPublicKey(), token.getTreasury() );
+		return String.format( "A ¤%s token issued by %s has expired.", Integer.valueOf( token.getValue() ), token.getTreasury() );
 	}
 
 }
