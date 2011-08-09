@@ -22,6 +22,13 @@ public class TreasuryService implements Treasury {
 	}
 
 	@Override
+	public Token refresh( Token token ) {
+		token = lookup( token );
+		delete( token );
+		return create( token.getValue() );
+	}
+
+	@Override
 	public SimpleToken create( int value ) {
 
 		if( value <= 0 ) {
@@ -65,7 +72,8 @@ public class TreasuryService implements Treasury {
 		try {
 			token = findById( token.getActionKey().getPublicKey().serialize() );
 		} catch( Exception exception ) {
-			// FIXME: This should catch an ObjectNotFoundException instead to prevent false-negatives.
+			// FIXME: This should catch an ObjectNotFoundException instead to prevent
+			// false-negatives.
 			token = null;
 		}
 		return token == null ? 0 : token.getValue();
