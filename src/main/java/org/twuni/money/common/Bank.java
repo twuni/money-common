@@ -39,10 +39,7 @@ public class Bank {
 		List<Token> tokens = vault.list( 1 );
 
 		if( tokens.isEmpty() ) {
-			if( value > 1 ) {
-				Token [] split = treasury.split( token, 1 ).toArray( new Token [0] );
-				token = treasury.merge( split[0], split[1] );
-			}
+			token = treasury.refresh( token );
 			vault.save( token );
 		} else {
 			Token existing = tokens.toArray( new Token [0] )[0];
